@@ -1,1 +1,1 @@
-This is a Ruby on Rails example application showing how to use an advanced search form for finding products in a catalog. This is based on the "Railscast #111"[link:http://railscasts.com/episodes/111-advanced-search-form-revised] by Ryan Bates.
+This is a Ruby on Rails example application showing how to use an advanced search form for finding products in a catalog. This is based on the Railscast #111[link:http://railscasts.com/episodes/111-advanced-search-form-revised] by Ryan Bates.
