@@ -1,6 +1,26 @@
-<h1>Listing products</h1>
+<h1>Products</h1>
 
-<table>
+<div>
+    <%= form_tag("/products", :method => "get") do %>
+      <div class="field">
+        <%= label_tag :description %><br />
+        <%= text_field_tag :description, params[:description] %>
+      </div>
+      <div class="field">
+        <%= label_tag :category_id %><br />
+        <%#= collection_select :product, :category_id, Category.order(:name), :id, :name, include_blank: true %>
+        <%= select("", "category_id", Category.order(:name).collect {|c| [ c.name, c.id ] }, { :include_blank => true, :selected => params[:category_id] }) %>
+      </div>
+      <div class="field">
+        <%= label_tag :min_price, "Price Range" %><br />
+        <%= text_field_tag :min_price, params[:min_price] %> -
+        <%= text_field_tag :max_price, params[:max_price] %>
+      </div>
+      <div class="actions"><%= submit_tag "Search" %></div>
+    <% end %>
+</div>
+
+<table cellpadding="5" border="1">
   <tr>
     <th>Name</th>
     <th>Description</th>
@@ -16,8 +36,8 @@
   <tr>
     <td><%= product.name %></td>
     <td><%= product.description %></td>
-    <td><%= product.price %></td>
-    <td><%= product.category_id %></td>
+    <td><%= number_to_currency(product.price) %></td>
+    <td><%= product.category.name %></td>
     <td><%= product.deleted %></td>
     <td><%= link_to 'Show', product %></td>
     <td><%= link_to 'Edit', edit_product_path(product) %></td>
@@ -29,3 +49,5 @@
 <br />
 
 <%= link_to 'New Product', new_product_path %>
+
+<%= params.to_yaml %>

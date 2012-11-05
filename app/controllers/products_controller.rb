@@ -2,7 +2,17 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    params[:description] ||= ""
+    params[:category_id] ||= ""
+    params[:min_price] ||= ""
+    params[:max_price] ||= ""
+    products = Product.order(:name)
+    products = products.where("name like ?", "%#{params[:description]}%") if params[:description].present?
+    products = products.where(category_id: params[:category_id]) if params[:category_id].present?
+    products = products.where("price >= ?", params[:min_price]) if params[:min_price].present?
+    products = products.where("price <= ?", params[:max_price]) if params[:max_price].present?
+
+    @products = products
 
     respond_to do |format|
       format.html # index.html.erb
